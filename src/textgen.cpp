@@ -16,6 +16,12 @@ void Generator::parse(std::istream& input) {
         current_prefix.pop_front();
         current_prefix.push_back(word);
     }
+    if (statetab.find(current_prefix) != statetab.end()) {
+        statetab[current_prefix].push_back(word);
+    }
+    else {
+        statetab[current_prefix] = std::vector<std::string>();
+    }
 }
 
 std::string Generator::generate(int n_words) {
@@ -43,5 +49,21 @@ std::string Generator::generate(int n_words) {
         cur_prefix.push_back(word);
     }
 
+    return res;
+}
+
+std::string Generator::generate(prefix cur_prefix) {
+    std::string res = cur_prefix[0] + " " + cur_prefix[1];
+    for (int i = 0; true; i++) {
+        auto variants = statetab[cur_prefix];
+        if (variants.size() == 0) {
+            break;
+        }
+        int var_idx = rand() % variants.size();
+        auto word = variants[var_idx];
+        res += " " + word;
+        cur_prefix.pop_front();
+        cur_prefix.push_back(word);
+    }
     return res;
 }

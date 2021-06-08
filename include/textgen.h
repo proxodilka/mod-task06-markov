@@ -24,6 +24,7 @@ public:
     }
 
     std::string generate(int n_words);
+    std::string generate(prefix cur_prefix);
     std::vector<prefix> get_prefixes() {
         std::vector<prefix> res;
         for (auto& x : statetab) {

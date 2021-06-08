@@ -7,7 +7,7 @@ TEST(TestGenerator, prefix) {
     std::string src = "one two three";
 
     std::vector<Generator::prefix> answer = {{"one", "two"}, {"two", "three"}};
-    Generator gen(src, 2);
+    Generator gen(2, src);
     auto result = gen.get_prefixes();
 
     ASSERT_EQ(result.size(), answer.size());
@@ -19,3 +19,11 @@ TEST(TestGenerator, prefix) {
     }
 }
 
+TEST(TestGenerator, prefix_suffix) {
+    std::string src = "one two three";
+
+    Generator gen(2, src);
+    auto result = gen.generate({"one", "two"});
+
+    ASSERT_TRUE(result == src) << result << " != " << src;
+}
